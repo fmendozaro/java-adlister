@@ -1,3 +1,5 @@
+package com.codeup.adlister.dao;
+
 public class Ad {
     private long id;
     private long userId;
