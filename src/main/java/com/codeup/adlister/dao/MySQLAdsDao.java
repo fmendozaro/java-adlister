@@ -35,6 +35,23 @@ public class MySQLAdsDao implements Ads{
         return null;
     }
 
+    @Override
+    public List<Ad> search(String term){
+        String sql = "SELECT * FROM ads WHERE title LIKE ?";
+        String searchTermWithWildcards = "%" + term + "%";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, searchTermWithWildcards);
+
+            ResultSet rs = stmt.executeQuery();
+            return generateAds(rs);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     // transforms the resultset into a java list
     private List<Ad> generateAds(ResultSet rs) throws SQLException {
         List<Ad> ads = new ArrayList<>();
